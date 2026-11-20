@@ -1,0 +1,192 @@
+{
+  "entities": {
+    "StoreProfile": {
+      "title": "StoreProfile",
+      "description": "Merchant store profile and operational configuration for POS and inventory.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "storeName": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "vertical": { "type": "string", "enum": ["grocery", "pharmacy", "hardware", "mixed"] },
+        "currencySymbol": { "type": "string", "minLength": 1, "maxLength": 8 },
+        "defaultTaxRate": { "type": "number" },
+        "phone": { "type": "string", "maxLength": 30 },
+        "address": { "type": "string", "maxLength": 240 },
+        "taxId": { "type": "string", "maxLength": 40 },
+        "seeded": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "storeName", "vertical", "currencySymbol", "defaultTaxRate", "phone", "address", "taxId", "seeded", "createdAt", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Inventory SKU item for grocery, pharmacy, or hardware retail.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "sku": { "type": "string", "minLength": 1, "maxLength": 48 },
+        "barcode": { "type": "string", "maxLength": 64 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 140 },
+        "category": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "vertical": { "type": "string", "enum": ["grocery", "pharmacy", "hardware"] },
+        "unit": { "type": "string", "minLength": 1, "maxLength": 24 },
+        "costPrice": { "type": "number" },
+        "sellingPrice": { "type": "number" },
+        "taxPercent": { "type": "number" },
+        "stockQty": { "type": "number" },
+        "minStockLevel": { "type": "number" },
+        "batchNumber": { "type": "string", "maxLength": 48 },
+        "expiryDate": { "type": "string", "maxLength": 20 },
+        "supplierId": { "type": "string", "maxLength": 128 },
+        "supplierName": { "type": "string", "maxLength": 120 },
+        "status": { "type": "string", "enum": ["active", "archived"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "sku", "barcode", "name", "category", "vertical", "unit", "costPrice", "sellingPrice", "taxPercent", "stockQty", "minStockLevel", "batchNumber", "expiryDate", "supplierId", "supplierName", "status", "createdAt", "updatedAt"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Retail customer account with credit khata balance and purchase totals.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 120 },
+        "address": { "type": "string", "maxLength": 240 },
+        "creditLimit": { "type": "number" },
+        "balance": { "type": "number" },
+        "totalPurchases": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "name", "phone", "email", "address", "creditLimit", "balance", "totalPurchases", "notes", "createdAt", "updatedAt"]
+    },
+    "Supplier": {
+      "title": "Supplier",
+      "description": "Wholesale vendor or distributor with payable balance tracking.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "contactPerson": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "email": { "type": "string", "maxLength": 120 },
+        "address": { "type": "string", "maxLength": 240 },
+        "taxId": { "type": "string", "maxLength": 40 },
+        "category": { "type": "string", "maxLength": 64 },
+        "payableBalance": { "type": "number" },
+        "totalSupplied": { "type": "number" },
+        "paymentTerms": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "name", "contactPerson", "phone", "email", "address", "taxId", "category", "payableBalance", "totalSupplied", "paymentTerms", "createdAt", "updatedAt"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "Immutable POS sales invoice with COGS and gross profit breakdown.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "invoiceNumber": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "customerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "customerName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "paymentMethod": { "type": "string", "enum": ["cash", "upi", "card", "credit", "split"] },
+        "paymentStatus": { "type": "string", "enum": ["paid", "partial", "credit"] },
+        "subtotal": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "taxAmount": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "dueAmount": { "type": "number" },
+        "totalCost": { "type": "number" },
+        "grossProfit": { "type": "number" },
+        "itemCount": { "type": "number" },
+        "items": { "type": "array" },
+        "saleDate": { "type": "string", "minLength": 10, "maxLength": 10 },
+        "notes": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "invoiceNumber", "customerId", "customerName", "paymentMethod", "paymentStatus", "subtotal", "discountAmount", "taxAmount", "totalAmount", "paidAmount", "dueAmount", "totalCost", "grossProfit", "itemCount", "items", "saleDate", "notes", "createdAt"]
+    },
+    "Purchase": {
+      "title": "Purchase",
+      "description": "Purchase order and supplier stock-in bill.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "poNumber": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "supplierId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "supplierName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "status": { "type": "string", "enum": ["ordered", "received", "cancelled"] },
+        "paymentStatus": { "type": "string", "enum": ["paid", "partial", "unpaid"] },
+        "subtotal": { "type": "number" },
+        "taxAmount": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "dueAmount": { "type": "number" },
+        "itemCount": { "type": "number" },
+        "items": { "type": "array" },
+        "purchaseDate": { "type": "string", "minLength": 10, "maxLength": 10 },
+        "notes": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "poNumber", "supplierId", "supplierName", "status", "paymentStatus", "subtotal", "taxAmount", "totalAmount", "paidAmount", "dueAmount", "itemCount", "items", "purchaseDate", "notes", "createdAt", "updatedAt"]
+    },
+    "LedgerEntry": {
+      "title": "LedgerEntry",
+      "description": "Immutable financial ledger record for customer credit/payments and supplier bills/payouts.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "partyType": { "type": "string", "enum": ["customer", "supplier"] },
+        "partyId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "partyName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "entryType": { "type": "string", "enum": ["sale_credit", "payment_received", "purchase_bill", "payment_made", "adjustment"] },
+        "amount": { "type": "number" },
+        "balanceAfter": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["cash", "upi", "card", "bank", "credit"] },
+        "referenceNo": { "type": "string", "maxLength": 48 },
+        "note": { "type": "string", "maxLength": 300 },
+        "entryDate": { "type": "string", "minLength": 10, "maxLength": 10 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["ownerId", "partyType", "partyId", "partyName", "entryType", "amount", "balanceAfter", "paymentMethod", "referenceNo", "note", "entryDate", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/stores/{storeId}": {
+      "schema": { "$ref": "#/entities/StoreProfile" },
+      "description": "Merchant store configuration keyed by owner UID."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Inventory catalog items owned by the merchant."
+    },
+    "/customers/{customerId}": {
+      "schema": { "$ref": "#/entities/Customer" },
+      "description": "Customer directory and credit ledger balances owned by the merchant."
+    },
+    "/suppliers/{supplierId}": {
+      "schema": { "$ref": "#/entities/Supplier" },
+      "description": "Supplier directory and accounts payable owned by the merchant."
+    },
+    "/sales/{saleId}": {
+      "schema": { "$ref": "#/entities/Sale" },
+      "description": "Immutable POS sales invoices owned by the merchant."
+    },
+    "/purchases/{purchaseId}": {
+      "schema": { "$ref": "#/entities/Purchase" },
+      "description": "Supplier purchase orders and stock-in bills owned by the merchant."
+    },
+    "/ledgerEntries/{entryId}": {
+      "schema": { "$ref": "#/entities/LedgerEntry" },
+      "description": "Immutable financial ledger transactions for customers and suppliers."
+    }
+  }
+}

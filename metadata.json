@@ -1,0 +1,8 @@
+{
+  "name": "TradeLedger POS",
+  "description": "Professional POS and Inventory Management System for grocery stores, pharmacies, and hardware shops with sales terminal, purchase orders, customer khata ledger, supplier management, low stock alerts, and profit analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
